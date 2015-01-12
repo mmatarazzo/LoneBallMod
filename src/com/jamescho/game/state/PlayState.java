@@ -21,6 +21,7 @@ public class PlayState extends State {
 	private static final int BALL_DIAMETER = 20;
 	
 	private int playerScore = 0;
+	private int playerTwoScore = 0;	// TWO PLAYER - MIKE
 	private Font scoreFont;
 
 	@Override
@@ -42,11 +43,15 @@ public class PlayState extends State {
 			ball.onCollideWidth(paddleLeft);
 			Resources.hit.play();
 		} else if (ballCollides(paddleRight)) {
-			playerScore++;
+			playerTwoScore++;
 			ball.onCollideWidth(paddleRight);
 			Resources.hit.play();
 		} else if (ball.isDead()) {
-			playerScore -= 3;
+			if (ball.getX() < 0) {
+				playerScore -= 3;
+			} else {
+				playerTwoScore -= 3;
+			}
 			ball.reset();
 		}
 	}
@@ -73,6 +78,7 @@ public class PlayState extends State {
 		// Draw UI
 		g.setFont(scoreFont);
 		g.drawString("" + playerScore, 350, 450);
+		g.drawString("" + playerTwoScore, 450, 450);	// TWO PLAYER - MIKE
 	}
 
 	@Override
@@ -84,19 +90,31 @@ public class PlayState extends State {
 	@Override
 	public void onKeyPress(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			paddleLeft.accelUp();
-			paddleRight.accelDown();
-		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			paddleLeft.accelDown();
+			//paddleLeft.accelUp();
 			paddleRight.accelUp();
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			//paddleLeft.accelDown();
+			paddleRight.accelDown();
+		}
+		
+		// TWO PLAYER CONTROL - MIKE
+		if (e.getKeyCode() == KeyEvent.VK_W) {
+			paddleLeft.accelUp();
+		} else if (e.getKeyCode() == KeyEvent.VK_S) {
+			paddleLeft.accelDown();
 		}
 	}
 
 	@Override
 	public void onKeyRelease(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
-			paddleLeft.stop();
+			//paddleLeft.stop();
 			paddleRight.stop();
+		}
+		
+		// TWO PLAYER CONTROL - MIKE
+		if (e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_S) {
+			paddleLeft.stop();
 		}
 	}
 	
