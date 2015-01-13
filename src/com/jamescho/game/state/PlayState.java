@@ -21,7 +21,7 @@ public class PlayState extends State {
 	private static final int BALL_DIAMETER = 20;
 	
 	private int playerScore = 0;
-	private int playerTwoScore = 0;	// TWO PLAYER - MIKE
+	private int playerTwoScore = 0;	// Two Players **mmatarazzo**
 	private Font scoreFont;
 
 	@Override
@@ -52,7 +52,7 @@ public class PlayState extends State {
 			} else {
 				playerTwoScore -= 3;
 			}
-			ball.reset();
+			ball.reset(ball.getX() < 0);	// Reset x-direction **mmatarazzo**
 		}
 	}
 
@@ -73,12 +73,13 @@ public class PlayState extends State {
 		g.fillRect(paddleRight.getX(), paddleRight.getY(), paddleRight.getWidth(), paddleRight.getHeight());
 		
 		// Draw Ball
-		g.drawRect(ball.getX(), ball.getY(), ball.getWidth(), ball.getHeight());
+		//g.drawRect(ball.getX(), ball.getY(), ball.getWidth(), ball.getHeight());
+		g.drawOval(ball.getX(), ball.getY(), ball.getWidth(), ball.getHeight());	// Circular Ball **mmatarazzo**
 		
 		// Draw UI
 		g.setFont(scoreFont);
 		g.drawString("" + playerScore, 350, 450);
-		g.drawString("" + playerTwoScore, 450, 450);	// TWO PLAYER - MIKE
+		g.drawString("" + playerTwoScore, 450, 450);	// Two Players **mmatarazzo**
 	}
 
 	@Override
@@ -89,6 +90,13 @@ public class PlayState extends State {
 
 	@Override
 	public void onKeyPress(KeyEvent e) {
+		// Two Players **mmatarazzo**
+		if (e.getKeyCode() == KeyEvent.VK_W) {
+			paddleLeft.accelUp();
+		} else if (e.getKeyCode() == KeyEvent.VK_S) {
+			paddleLeft.accelDown();
+		}
+		
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			//paddleLeft.accelUp();
 			paddleRight.accelUp();
@@ -96,30 +104,24 @@ public class PlayState extends State {
 			//paddleLeft.accelDown();
 			paddleRight.accelDown();
 		}
-		
-		// TWO PLAYER CONTROL - MIKE
-		if (e.getKeyCode() == KeyEvent.VK_W) {
-			paddleLeft.accelUp();
-		} else if (e.getKeyCode() == KeyEvent.VK_S) {
-			paddleLeft.accelDown();
-		}
 	}
 
 	@Override
 	public void onKeyRelease(KeyEvent e) {
+		// Two Players **mmatarazzo**
+		if (e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_S) {
+			paddleLeft.stop();
+		}
+		
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
 			//paddleLeft.stop();
 			paddleRight.stop();
 		}
-		
-		// TWO PLAYER CONTROL - MIKE
-		if (e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_S) {
-			paddleLeft.stop();
-		}
 	}
 	
 	private boolean ballCollides(Paddle p) {
-		return ball.getRect().intersects(p.getRect());
+		//return ball.getRect().intersects(p.getRect());
+		return ball.getCircle().intersects(p.getRect());	// Circular Ball **mmatarazo**
 	}
 
 }

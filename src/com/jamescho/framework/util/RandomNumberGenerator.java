@@ -13,4 +13,9 @@ public class RandomNumberGenerator {
 	public static int getRandInt(int upperBound) {
 		return rand.nextInt(upperBound);
 	}
+	
+	// Randomize Initial x-direction **mmatarazzo**
+	public static boolean getRandBool() {
+		return rand.nextBoolean();
+	}
 }
