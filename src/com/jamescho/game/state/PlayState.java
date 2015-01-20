@@ -20,7 +20,7 @@ public class PlayState extends State {
 	private Ball ball;
 	private static final int BALL_DIAMETER = 20;
 	
-	private int playerScore = 0;
+	private int playerOneScore = 0;
 	private int playerTwoScore = 0;	// Two Players **mmatarazzo**
 	private Font scoreFont;
 
@@ -39,7 +39,7 @@ public class PlayState extends State {
 		ball.update();
 		
 		if (ballCollides(paddleLeft)) {
-			playerScore++;
+			playerOneScore++;
 			ball.onCollideWidth(paddleLeft);
 			Resources.hit.play();
 		} else if (ballCollides(paddleRight)) {
@@ -48,7 +48,7 @@ public class PlayState extends State {
 			Resources.hit.play();
 		} else if (ball.isDead()) {
 			if (ball.getX() < 0) {
-				playerScore -= 3;
+				playerOneScore -= 3;
 			} else {
 				playerTwoScore -= 3;
 			}
@@ -73,12 +73,11 @@ public class PlayState extends State {
 		g.fillRect(paddleRight.getX(), paddleRight.getY(), paddleRight.getWidth(), paddleRight.getHeight());
 		
 		// Draw Ball
-		//g.drawRect(ball.getX(), ball.getY(), ball.getWidth(), ball.getHeight());
 		g.drawOval(ball.getX(), ball.getY(), ball.getWidth(), ball.getHeight());	// Circular Ball **mmatarazzo**
 		
 		// Draw UI
 		g.setFont(scoreFont);
-		g.drawString("" + playerScore, 350, 450);
+		g.drawString("" + playerOneScore, 350, 450);
 		g.drawString("" + playerTwoScore, 450, 450);	// Two Players **mmatarazzo**
 	}
 
@@ -98,10 +97,8 @@ public class PlayState extends State {
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			//paddleLeft.accelUp();
 			paddleRight.accelUp();
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			//paddleLeft.accelDown();
 			paddleRight.accelDown();
 		}
 	}
@@ -114,13 +111,11 @@ public class PlayState extends State {
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
-			//paddleLeft.stop();
 			paddleRight.stop();
 		}
 	}
 	
 	private boolean ballCollides(Paddle p) {
-		//return ball.getRect().intersects(p.getRect());
 		return ball.getCircle().intersects(p.getRect());	// Circular Ball **mmatarazo**
 	}
 

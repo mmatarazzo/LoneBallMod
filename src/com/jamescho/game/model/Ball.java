@@ -1,6 +1,5 @@
 package com.jamescho.game.model;
 
-//import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 
 import com.jamescho.framework.util.RandomNumberGenerator;
@@ -10,7 +9,6 @@ import com.jamescho.game.main.Resources;
 public class Ball {
 	
 	private int x, y, width, height, velX, velY;
-	//private Rectangle rect;
 	private Ellipse2D circle;	// Circular Ball **mmatarazzo**
 	
 	public Ball(int x, int y, int width, int height) {
@@ -19,13 +17,8 @@ public class Ball {
 		this.width = width;
 		this.height = height;
 		// Randomize Initial x-direction **mmatarazzo**
-		if (RandomNumberGenerator.getRandBool()) {
-			velX = 5;
-		} else {
-			velX = -5;
-		}
+		velX = RandomNumberGenerator.getRandBool() ? 5 : -5;
 		velY = RandomNumberGenerator.getRandIntBetween(-4, 5);
-		//rect = new Rectangle(x, y, width, height);	
 		circle = new Ellipse2D.Double(x, y, width, height);	// Circular Ball **mmatarazzo**
 	}
 	
@@ -50,7 +43,6 @@ public class Ball {
 	}
 	
 	private void updateRect() {
-		//rect.setBounds(x, y, width, height);
 		circle.setFrame(x, y, width, height);	// Circular Ball **mmatarazzo**
 	}
 	
@@ -71,12 +63,7 @@ public class Ball {
 	public void reset(boolean leftSide) {
 		x = 300;
 		y = 200;
-		// Reset x-direction **mmatarazzo**
-		if (leftSide) {
-			velX = 5;
-		} else {
-			velX = -5;
-		}
+		velX = leftSide ? 5 : -5;	// Reset x-direction **mmatarazzo**
 		velY = RandomNumberGenerator.getRandIntBetween(-4, 5);
 	}
 	
@@ -96,14 +83,9 @@ public class Ball {
 		return height;
 	}
 	
-	/*
-	public Rectangle getRect() {
-		return rect;
-	}
-	*/
-	
 	// Circular Ball **mmatarazzo**
 	public Ellipse2D getCircle() {
 		return circle;
 	}
+	
 }

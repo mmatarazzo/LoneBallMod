@@ -23,4 +23,5 @@ public abstract class State {
 	public void setCurrentState(State newState) {
 		GameMain.sGame.setCurrentState(newState);
 	}
+	
 }

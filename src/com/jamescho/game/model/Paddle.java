@@ -66,4 +66,5 @@ public class Paddle {
 	public Rectangle getRect() {
 		return rect;
 	}
+	
 }
